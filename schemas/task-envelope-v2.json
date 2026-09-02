@@ -1,0 +1,5 @@
+{
+  "schema":"task-envelope-v2","required":["task_id","event_id","origin","control","execution","idempotency_key","requested_at","payload"],
+  "continuous_context":{"required":["parent_task_id","parent_thread_id","continuation_mode","new_thread_forbidden"],"continuation_mode":"same_task_context","new_thread_forbidden":true,"handoff_aliasing_forbidden":true},
+  "properties":{"task_id":{"type":"string"},"event_id":{"type":"string"},"origin":{"description":"request origin; GPT Brain or client"},"control":{"description":"GPT Brain control and acceptance authority"},"execution":{"description":"selected physical node"},"idempotency_key":{"type":"string"},"payload":{"type":"object"},"continuous_context":{"type":"object"}}
+}
