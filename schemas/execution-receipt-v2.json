@@ -1,0 +1,7 @@
+{
+  "schema":"execution-receipt-v2","required":["task_id","event_id","source_hardware","status","changes","verification","artifacts","errors","needs_gpt_decision","delivery"],
+  "status_enum":["partial","needs_confirmation","completed","failed","BLOCKED","ORPHANED"],
+  "duplicate_policy":"same task_id and idempotency_key must not repeat side effects",
+  "delivery":{"transport":"PENDING|PASS|FAIL","inbox":"PENDING|PASS|FAIL","parent_chatgpt_conversation":"UNSUPPORTED|UNVERIFIED|PASS|FAIL","evidence":[]},
+  "properties":{"task_id":{"type":"string"},"event_id":{"type":"string"},"source_hardware":{"type":"string"},"status":{"type":"string"},"changes":{"type":"array"},"verification":{"type":"array"},"artifacts":{"type":"array"},"errors":{"type":"array"},"needs_gpt_decision":{"type":"array"},"delivery":{"type":"object"}}
+}

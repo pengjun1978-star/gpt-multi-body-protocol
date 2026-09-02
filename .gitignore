@@ -1,0 +1,27 @@
+
+# Runtime and private material
+receipts/
+logs/
+runtime/
+state/
+*-state.json
+leases/
+tasks/
+callbacks/
+private-registries/
+*.local
+*.secret
+*.token
+.env
+.env.*
+
+# Local development
+.DS_Store
+venv/
+.venv/
+node_modules/
+__pycache__/
+
+# Machine-specific paths and generated artifacts
+absolute-paths/
+*.log

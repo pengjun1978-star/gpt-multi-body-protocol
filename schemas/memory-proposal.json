@@ -1,0 +1,1 @@
+{"schema":"memory-proposal","required":["proposal_id","task_id","proposed_by","content","gpt_acceptance_required"],"gpt_acceptance_required":true,"commit_authority":"gpt-brain"}

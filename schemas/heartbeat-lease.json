@@ -1,0 +1,1 @@
+{"schema":"heartbeat-lease","required":["task_id","lease_id","node_id","state","heartbeat_at","expires_at"],"node_state_enum":["ONLINE","BUSY","STALE","OFFLINE","ORPHANED"],"lease_state_enum":["RUNNING","STALE","ORPHANED","RETRY","REROUTE","BLOCKED","RELEASED"],"orphan_policy":"ambiguous irreversible work must stop; no automatic rerun"}
