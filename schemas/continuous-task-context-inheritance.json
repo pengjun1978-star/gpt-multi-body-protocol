@@ -1,0 +1,10 @@
+{
+  "schema":"continuous-task-context-inheritance-v1",
+  "required":["parent_task_id","parent_thread_id","continuation_mode","new_thread_forbidden","acceptance_rule"],
+  "continuation_mode":"same_task_context",
+  "new_thread_forbidden":true,
+  "handoff_aliasing_forbidden":true,
+  "acceptance_rule":"A new Work/Codex thread may be logically linked by parent_task_id, but cannot be reported as continuation of parent_thread_id.",
+  "fallback":"If the original thread cannot accept follow-up work, mark continuation BLOCKED and wait for the user/GPT to resume that original thread.",
+  "delivery_rule":{"transport_or_inbox_delivered_does_not_equal_parent_conversation_delivered":true,"parent_conversation_evidence_required":true}
+}
