@@ -1,0 +1,1 @@
+{"schema":"gpt-verdict","required":["task_id","verdict","accepted_by_gpt","evidence"],"verdict_enum":["PASS","PASS_PENDING_GPT_ACCEPTANCE","FAIL","NEEDS_CONFIRMATION"],"accepted_by_gpt":{"type":"boolean"}}
