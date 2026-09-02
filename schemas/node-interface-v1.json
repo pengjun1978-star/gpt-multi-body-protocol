@@ -1,0 +1,6 @@
+{
+  "schema_version":"1.0","name":"Node Interface v1",
+  "operations":{"register":"Node registration","health":"Health/readiness","capabilities":"Capability discovery","Task.submit":"Submit envelope","Task.status":"Read task state","Task.cancel":"Request cancellation","Receipt.return":"Return execution receipt","Heartbeat.update":"Update lease/heartbeat","Memory.propose":"Submit proposal","Memory.commit":"Commit only after GPT acceptance"},
+  "authority":{"gpt-brain":["Memory.commit","GPT Verdict","final acceptance"],"node":["health","capabilities","execution evidence"]},
+  "idempotency":{"required":["task_id","event_id","idempotency_key"],"duplicate_policy":"deduplicate and return prior receipt"}
+}
