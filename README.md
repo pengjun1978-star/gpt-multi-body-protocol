@@ -1,4 +1,4 @@
-# GPT Multi-Body Protocol v1.0
+# GPT Multi-Body Protocol v1.0.1
 
 An open architecture reference for a single GPT Brain coordinating multiple Codex execution Bodies across heterogeneous hardware.
 
@@ -26,9 +26,15 @@ Execution completion does not grant GPT acceptance, memory commit, or global com
 
 `schemas/` contains JSON protocol definitions. `bootstrap/` contains portable low-risk bootstrap and validation examples. `docs/` contains public implementation notes. `examples/` is reserved for sanitized fixtures.
 
+## v1.0.1 Production Hardening
+
+This release adds resident heartbeat/lease adapters, health evaluation, reversible install templates, Body self-identification, canonical timestamp handling, and validation evidence. The v1.0 architecture and schemas remain compatible and frozen.
+
+See [the v1.0.1 phase review](docs/phase-review-v1.0.1.md), [body and time contract](docs/body-and-time-contract.md), and [compatibility and rollback notes](docs/compatibility-and-rollback.md).
+
 ## Status
 
-`Protocol v1.0 baseline / frozen architecture reference.` Production daemonization, scheduling, failover, and additional hardware onboarding belong to later version increments.
+`Protocol v1.0.1 / production hardening.` The v1.0 baseline remains available as the frozen architecture reference.
 
 ## Public-safety boundary
 
