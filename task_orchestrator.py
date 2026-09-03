@@ -73,3 +73,11 @@ class DeterministicScheduler:
             if not self.dry_run:
                 body.active_task_count += 1
         return decisions
+
+    def retry_or_reroute(self, task_id: str, failed_body_id: str | None = None) -> dict[str, Any]:
+        """Return one deterministic retry target, without mutating task identity."""
+        task = self.registry.tasks[task_id]
+        body = next((b for b in self.bodies if b.body_id != failed_body_id and b.can_run(task)), None)
+        return {"task_id": task_id, "decision": "RETRY" if body else "BLOCKED",
+                "body_id": body.body_id if body else None,
+                "reason": "REROUTE_AFTER_FAILURE" if body else "NO_ALTERNATE_BODY"}

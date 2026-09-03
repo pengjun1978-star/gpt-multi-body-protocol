@@ -5,6 +5,6 @@
   "status": "PASS_PENDING_GPT_ACCEPTANCE",
   "base": {"tag": "v1.0.2", "commit": "00abe88df21cbf37d03f2bb50335dfc6a1357748"},
   "micro_tasks": {"T1": "PASS", "T2": "PASS", "T3": "PASS_CAPABILITY_ONLY", "T4": "PASS", "T5": "PASS_REJECT_RESERVED", "T6": "PASS"},
-  "verification": {"tests": "16 passed", "diff_check": "PASS", "frozen_baseline_modified": false},
+  "verification": {"tests": "17 passed", "diff_check": "PASS", "router_receipt_integration": "PASS", "concurrency_reroute": "PASS", "office_4090_probe": "PASS_STATUS_ONLY", "frozen_baseline_modified": false},
   "needs_gpt_decision": ["GPT ACK Closure / acceptance of Foundation"]
 }

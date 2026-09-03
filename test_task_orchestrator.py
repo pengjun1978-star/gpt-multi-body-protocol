@@ -22,5 +22,12 @@ class OrchestratorTests(unittest.TestCase):
         r = TaskRegistry(); r.register(Task("same"))
         with self.assertRaises(ValueError): r.register(Task("same", Priority.P0))
 
+    def test_concurrency_and_deterministic_reroute(self):
+        r = TaskRegistry(); r.register(Task("t"))
+        bodies = [Body("busy", active_task_count=1, max_concurrency=1), Body("backup", max_concurrency=2)]
+        scheduler = DeterministicScheduler(r, bodies, dry_run=False)
+        self.assertEqual(scheduler.schedule()[0]["body_id"], "backup")
+        self.assertEqual(scheduler.retry_or_reroute("t", "busy")["body_id"], "backup")
+
 
 if __name__ == "__main__": unittest.main()
