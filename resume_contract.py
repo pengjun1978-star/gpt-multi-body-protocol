@@ -49,6 +49,13 @@ class ResumeRegistry:
         record.last_resume_at = datetime.now(timezone.utc).isoformat()
         return {"outcome": "RESUMED_EXISTING", "record": asdict(record)}
 
+    def continue_task(self, parent, task, *, canonical_session_id, body_node_id):
+        """Continuation guard: exact canonical session only; never creates."""
+        record = self.resolve_existing(parent, task)
+        if record.codex_thread_session_id != canonical_session_id:
+            raise ResumeError("RESUME_FAILED/BLOCKED: canonical session unavailable")
+        return self.resume(parent, task, body_node_id)
+
     def create(self, parent, task, *, explicit_new, **fields):
         if not explicit_new:
             raise ResumeError("CREATE_REJECTED: create requires explicit new-task intent")

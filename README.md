@@ -14,6 +14,7 @@ Registry discovery reads local identity, Office-4090 GPU/runtime metadata, and t
 - `resume_contract.py`: resolves and resumes an existing mapping; it rejects silent create and duplicate active mappings.
 - `business_evidence_delivery.py`: packages substantive evidence into hashed, bounded chunks and tracks delivery separately from parent visibility.
 - `automatic_callback.py`: persists callbacks, retries busy parents, deduplicates sends, escalates failures, and records explicit GPT ACKs.
+- `mandatory_return.py`: requires every terminal local result to actively return a canonical callback to its original Parent GPT; Office inbox/outbox is fallback only.
 - `schemas/task-requirement-v1.json`: compatible requirement fields.
 
 The employee-review integration is represented only by a future task template boundary; this line does not access mailbox credentials or fabricate email data.
@@ -21,3 +22,12 @@ The employee-review integration is represented only by a future task template bo
 ## Resume Contract (P0)
 
 Every task mapping carries `parent_gpt_thread_id`, `codex_task_id`, `codex_thread_session_id`, `body_node_id`, `project_worktree`, `created_at`, and `last_resume_at`. A continuation first resolves the existing `(parent_gpt_thread_id, codex_task_id)` record, verifies body identity, then resumes it. Missing or mismatched records return `RESUME_FAILED/BLOCKED`; they never create a replacement. Creation requires explicit new-task intent and returns `CREATED_NEW`. Existing `ACTIVE` or `RESUMABLE` mappings reject creation.
+
+## Mandatory Return-to-Origin Rule (v1.1.1)
+
+Every Parent GPT delegation must actively return a canonical callback to the
+original Parent GPT for `COMPLETED`, `PARTIAL`, `BLOCKED`, `FAILED`, or
+`CANCELLED`. Office inbox/outbox is a fallback path and cannot replace the
+Parent GPT return. Continuation of the same task must exact-resume the canonical
+Codex session; unavailable canonical sessions result in `BLOCKED` and never
+create a new task, thread, or session.
