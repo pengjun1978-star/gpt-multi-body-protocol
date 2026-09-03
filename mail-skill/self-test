@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+printf '%s\n' 'BLOCKED: no authorized test mailbox configured; no live send performed'
+exit 2

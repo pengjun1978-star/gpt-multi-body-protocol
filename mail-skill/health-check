@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+test -f "$(dirname "$0")/SKILL.md"
+printf '%s\n' 'PASS: package structure; credential source=macOS Keychain; live mailbox check requires configured account'
