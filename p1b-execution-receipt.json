@@ -1,0 +1,12 @@
+{
+  "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
+  "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+  "phase": "P1B",
+  "source_hardware": "MacBook Pro Codex",
+  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "closed_loop": "PASS",
+  "dag": "a -> b -> c; each dependent unlocks only after ACCEPTED",
+  "verification": {"tests": "47 passed", "diff_check": "PASS", "frozen_baseline": "UNCHANGED"},
+  "commit": "pending",
+  "needs_gpt_decision": ["GPT ACK Closure / accept P1B"]
+}

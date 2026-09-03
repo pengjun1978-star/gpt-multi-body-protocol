@@ -27,3 +27,13 @@ class PersistentRegistryTests(unittest.TestCase):
         r.transition("t1", "WAITING_GPT_ACCEPTANCE", callback_status="DELIVERED")
         row = r.transition("t1", "ACCEPTED", ack_status="ACKED")
         self.assertEqual((row["receipt_status"], row["callback_status"], row["ack_status"]), ("READY", "DELIVERED", "ACKED"))
+
+    def test_persistent_dag_closed_loop_unlocks_dependents(self):
+        r = PersistentTaskRegistry(":memory:")
+        r.register("a", 1); r.register("b", 2, ("a",)); r.register("c", 3, ("b",))
+        self.assertEqual([x["task_id"] for x in r.ready_tasks()], ["a"])
+        a = r.close_loop("a", body="mbp-primary", generation=1)
+        self.assertEqual(a["state"], "ACCEPTED")
+        self.assertEqual([x["task_id"] for x in r.ready_tasks()], ["b"])
+        r.close_loop("b", body="office-4090", generation=1)
+        self.assertEqual([x["task_id"] for x in r.ready_tasks()], ["c"])

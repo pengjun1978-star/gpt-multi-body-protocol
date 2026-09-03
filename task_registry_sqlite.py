@@ -52,3 +52,17 @@ class PersistentTaskRegistry:
 
     def recoverable(self):
         return [dict(r) for r in self.db.execute("SELECT * FROM tasks WHERE state IN ('REGISTERED','READY','RUNNING','RESULT_READY','WAITING_GPT_ACCEPTANCE') ORDER BY priority, task_id")]
+
+    def ready_tasks(self):
+        rows = self.db.execute("SELECT * FROM tasks ORDER BY priority, task_id").fetchall()
+        accepted = {r["task_id"] for r in rows if r["state"] == "ACCEPTED"}
+        return [dict(r) for r in rows if r["state"] in ("REGISTERED", "READY") and set(json.loads(r["dependencies"])) <= accepted]
+
+    def close_loop(self, task_id, *, body, generation, receipt_status="READY", callback_status="DELIVERED", ack_status="ACKED"):
+        """Persist one bounded execution -> receipt -> callback -> ACK loop."""
+        row = self.get(task_id)
+        if row["state"] == "REGISTERED": self.transition(task_id, "READY")
+        self.transition(task_id, "RUNNING", body=body, generation=generation)
+        self.transition(task_id, "RESULT_READY", receipt_status=receipt_status)
+        self.transition(task_id, "WAITING_GPT_ACCEPTANCE", callback_status=callback_status)
+        return self.transition(task_id, "ACCEPTED", ack_status=ack_status)
