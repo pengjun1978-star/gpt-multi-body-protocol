@@ -15,7 +15,7 @@ ALLOWED = {
 
 class PersistentTaskRegistry:
     def __init__(self, path: str | Path):
-        self.db = sqlite3.connect(path)
+        self.db = sqlite3.connect(path, check_same_thread=False)
         self.db.row_factory = sqlite3.Row
         self.db.execute("""CREATE TABLE IF NOT EXISTS tasks (
           task_id TEXT PRIMARY KEY, priority INTEGER NOT NULL, dependencies TEXT NOT NULL,
