@@ -3,10 +3,17 @@
   "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
   "phase": "P1B",
   "source_hardware": "MacBook Pro Codex",
-  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "status": "GPT_ACCEPTED",
   "closed_loop": "PASS",
   "dag": "a -> b -> c; each dependent unlocks only after ACCEPTED",
   "verification": {"tests": "47 passed", "diff_check": "PASS", "frozen_baseline": "UNCHANGED"},
-  "commit": "pending",
-  "needs_gpt_decision": ["GPT ACK Closure / accept P1B"]
+  "implementation_commit": "9093cb2821e9fb0751ea253a048af2952b527b14",
+  "validated_head": "e965c2856ccc20e3c52dd0de3d70bc3df9742104",
+  "callback_event_id": "fa6cc1b7-946d-4ff2-ab8b-285ac7124ab6",
+  "gpt_ack": {
+    "status": "ACKED",
+    "verdict": "P1B_ACCEPTED",
+    "closure": "CLOSED"
+  },
+  "needs_gpt_decision": []
 }
