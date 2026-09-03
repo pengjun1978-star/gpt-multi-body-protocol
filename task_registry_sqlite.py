@@ -20,8 +20,25 @@ class PersistentTaskRegistry:
         self.db.execute("""CREATE TABLE IF NOT EXISTS tasks (
           task_id TEXT PRIMARY KEY, priority INTEGER NOT NULL, dependencies TEXT NOT NULL,
           state TEXT NOT NULL, assigned_body TEXT, generation INTEGER NOT NULL DEFAULT 0,
-          receipt_status TEXT, callback_status TEXT, ack_status TEXT)""")
+          receipt_status TEXT, callback_status TEXT, ack_status TEXT,
+          ack_callback_event_id TEXT, ack_parent_route TEXT, ack_generation INTEGER, ack_id TEXT)""")
+        columns = {r[1] for r in self.db.execute("PRAGMA table_info(tasks)")}
+        for name, kind in (("ack_callback_event_id", "TEXT"), ("ack_parent_route", "TEXT"), ("ack_generation", "INTEGER"), ("ack_id", "TEXT")):
+            if name not in columns: self.db.execute(f"ALTER TABLE tasks ADD COLUMN {name} {kind}")
         self.db.commit()
+
+    def receive_gpt_ack(self, *, callback_event_id, task_id, generation, parent_route, ack_id):
+        row = self.get(task_id)
+        if row["generation"] != generation: raise ValueError("ACK_GENERATION_MISMATCH")
+        existing = row.get("ack_callback_event_id")
+        if row["ack_status"] == "GPT_ACKED":
+            if existing != callback_event_id: raise ValueError("ACK_CALLBACK_MISMATCH")
+            return row
+        if row["state"] != "WAITING_GPT_ACCEPTANCE": raise ValueError("ACK_TASK_NOT_WAITING")
+        self.db.execute("""UPDATE tasks SET state='ACCEPTED', ack_status='GPT_ACKED',
+          ack_callback_event_id=?, ack_parent_route=?, ack_generation=?, ack_id=? WHERE task_id=?""",
+          (callback_event_id, json.dumps(parent_route, sort_keys=True, ensure_ascii=False), generation, ack_id, task_id))
+        self.db.commit(); return self.get(task_id)
 
     def register(self, task_id, priority=2, dependencies=()):
         deps = tuple(dependencies)
