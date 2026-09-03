@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Task Requirement v1",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "requires_gpu": {"type": "boolean"},
+    "min_vram_gb": {"type": "number", "minimum": 0},
+    "os": {"type": "string"},
+    "capabilities": {"type": "array", "items": {"type": "string"}},
+    "data_locality": {"type": "string"},
+    "preferred_body": {"type": "string"},
+    "fallback_allowed": {"type": "boolean"}
+  }
+}

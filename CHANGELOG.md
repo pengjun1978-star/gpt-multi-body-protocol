@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.0.2-dev - 2026-09-03
+
+- Added live Capability Registry v1 and deterministic Router v0.
+- Added backward-compatible Task Requirement v1 fields.
+- Added read-only Office-4090 AI Compute Capability Discovery and Business Receipt.
+- Preserved v1.0/v1.0.1 frozen protocol material.
+
 ## v1.0.1 - 2026-09-02
 
 - Added resident heartbeat daemon with atomic state writes and signal-safe shutdown.
