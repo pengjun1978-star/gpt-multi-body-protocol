@@ -2,11 +2,14 @@
   "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
   "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
   "phase": "P1E",
-  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "status": "GPT_ACCEPTED",
   "policy": "AFFINITY_BEFORE_LOAD",
   "capability_loads": {"agent_load_independent": true, "compute_load_independent": true},
   "failure_isolation": {"mac_agent_busy_shared_task": "REROUTE_TO_OFFICE_4090", "mac_agent_busy_mac_affinity": "WAITING_RETRY", "office_agent_busy_compute": "COMPUTE_REMAINS_HEALTHY", "compute_busy_agent": "AGENT_REMAINS_HEALTHY", "compute_unavailable": "COMPUTE_UNAVAILABLE"},
   "real_verification": {"office_codex_transport": {"ssh": "PASS", "host": "CHINAMI-UB37H72", "user": "sundc"}, "office_11434": {"http": 200, "model": "qwen3.8-27b-dflash2", "result": "PASS"}, "mac_studio": "RESERVED_NO_DISPATCH"},
   "verification": {"tests": "52 passed", "diff_check": "PASS", "frozen_baselines": "UNCHANGED", "11435_required": false},
-  "needs_gpt_decision": ["GPT ACK Closure / accept P1E"]
+  "implementation_commit": "da70735c8e6962c69b04bf6e42635d181ebc5c42",
+  "callback_event_id": "25859089-ea51-4f04-b7a0-998a3caa6782",
+  "gpt_ack": {"status": "ACKED", "verdict": "P1E_ACCEPTED", "closure": "CLOSED"},
+  "needs_gpt_decision": []
 }
