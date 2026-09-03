@@ -1,0 +1,32 @@
+{
+  "p0": "single-execution-owner",
+  "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
+  "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+  "incident_duplicate_session_id": "01a06561-4cd0-7db3-9da6-e76fc9a25fec",
+  "status": "PROTOCOL_CLOSED_EXTERNAL_TRANSPORT_PENDING",
+  "implemented": {
+    "persistent_sqlite_owner_registry": true,
+    "cross_process_serialization": true,
+    "mandatory_execution_entrypoint": true,
+    "lease_held_until_explicit_completion": true,
+    "lease_expiry_recovery": true,
+    "generation_fencing": true,
+    "duplicate_session_block": "DUPLICATE_EXECUTION_BLOCKED",
+    "same_running_session_dedup": "ALREADY_RUNNING_NOOP",
+    "github_comment_resume": "BLOCKED",
+    "local_handoff_create_resume": "BLOCKED"
+  },
+  "independent_gpt_targeted_validation": {
+    "tests": 5,
+    "passed": 5,
+    "cases": [
+      "lease lifecycle remains RUNNING until explicit completion",
+      "duplicate UI session blocked",
+      "GitHub comment and local handoff blocked as resume transports",
+      "expired lease creates next generation and stale completion is fenced",
+      "lease renewal keeps current generation live"
+    ]
+  },
+  "remaining_external_blocker": "Current ChatGPT tool surface exposes create-only local.handoff but no native resume-by-codex_thread_session_id API. Repository control can reject invalid resume transports, but cannot make the product-level create-only API become a native resume API.",
+  "acceptance_rule": "Do not call v1.1 P0 fully end-to-end closed until a real native resume transport can target the canonical Codex session and pass through this entrypoint without creating another UI thread."
+}
