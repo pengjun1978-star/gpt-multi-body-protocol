@@ -11,7 +11,10 @@
   "runtime":{"path":"/Applications/ChatGPT.app/Contents/Resources/codex","version":"0.152.1"},
   "successor_rollout":{"path":"/Users/pengjun1978/.codex/sessions/2026/09/03/rollout-2026-09-03T14-43-44-01a06602-57ad-7ef0-a4f2-972172464b70.jsonl","bytes":95070,"records":32,"sha256":"fca1cda071bc0f4ba211320eccfccaaf6288de6db303d454b6d09ca109847fd2","append_only":"PASS","historical_prefix":"PASS"},
   "resume_evidence":{"resume_1_returned":"01a06602-57ad-7ef0-a4f2-972172464b70","resume_2_returned":"01a06602-57ad-7ef0-a4f2-972172464b70","new_session_delta":1,"forks":0,"legacy_controller_check":"LEGACY_COMPATIBILITY_BLOCKED_BEFORE_SUBPROCESS","duplicate_owner":"DUPLICATE_EXECUTION_BLOCKED_REGRESSION"},
-  "status":"PASS_PENDING_GPT_ACCEPTANCE",
+  "status":"GPT_ACCEPTED",
   "verification":{"tests":"55 passed","diff_check":"PASS","historical_receipts":"P1A-P1F/RC unchanged","migration_apply":false},
-  "needs_gpt_decision":["GPT ACK Closure / accept P1G"]
+  "implementation_commit":"cbd16068698da2ea3f7fe738f8870e337aa7da8e",
+  "callback_event_id":"4c46381d-c7b8-4a80-b45d-907981786441",
+  "gpt_ack":{"status":"ACKED","verdict":"P1G_SUCCESSOR_GENERATION_ACCEPTED","closure":"CLOSED","release_gate":"NATIVE_RESUME_COMPATIBILITY_RESOLVED_BY_GENERATION_BOUNDARY"},
+  "needs_gpt_decision":[]
 }
