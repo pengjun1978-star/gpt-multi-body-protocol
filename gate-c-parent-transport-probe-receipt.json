@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.1.1-gate-c",
+  "task_id": "20260903-v111-gate-c-parent-transport-adapter",
+  "source_hardware": "MacBook Pro Codex",
+  "parent_route": "6a96e7a6-4d34-83e8-810c-e7195f3dc427",
+  "host_send_result": "ACCEPTED_BY_HOST_TOOL",
+  "ui_visible": false,
+  "gpt_acked": false,
+  "evidence": [
+    "send_message_to_thread returned the parent threadId",
+    "wait_threads returned No Codex thread found for threadId; no readable parent receipt"
+  ],
+  "conclusion": "PROTOCOL_PASS_PLATFORM_BOUNDARY",
+  "limitations": ["No supported local-process adapter with parent UI visibility and GPT ACK proof"]
+}

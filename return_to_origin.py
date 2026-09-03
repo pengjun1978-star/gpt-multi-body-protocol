@@ -6,11 +6,49 @@ platform boundary and queues safely for retry.
 """
 from __future__ import annotations
 import hashlib, json, sqlite3, time, uuid
+from dataclasses import dataclass
+from typing import Callable, Mapping, Protocol
 from pathlib import Path
 
-DELIVERY = ("PENDING", "ACCEPTED", "DELIVERED", "ACKED", "OUTBOX")
+DELIVERY = ("PENDING", "ACCEPTED", "UI_VISIBLE", "GPT_ACKED", "OUTBOX")
+# DELIVERED/ACKED remain readable for v1.1.1 receipts created before this adapter.
+LEGACY_DELIVERY = ("DELIVERED", "ACKED")
 
 class PlatformBoundary(RuntimeError): pass
+
+@dataclass(frozen=True)
+class TransportReceipt:
+    state: str
+    provider: str
+    evidence: tuple[str, ...] = ()
+    ack_id: str | None = None
+    detail: str | None = None
+
+class ParentGPTTransportAdapter(Protocol):
+    """Adapter contract; ACCEPTED never implies UI visibility or GPT ACK."""
+    provider: str
+    def send(self, parent_route: Mapping, envelope: Mapping) -> TransportReceipt: ...
+
+class ApplicationThreadMessageAdapter:
+    """Provider for an explicitly authorized application bridge.
+
+    The bridge must return evidence for each transition. A plain success value
+    is intentionally rejected, preventing a local callback from being called
+    UI_VISIBLE or GPT_ACKED without product-level proof.
+    """
+    provider = "codex-app-thread-message-bridge"
+    def __init__(self, bridge: Callable[[Mapping, Mapping], Mapping]): self.bridge = bridge
+    def send(self, parent_route, envelope):
+        result = self.bridge(parent_route, envelope)
+        if not isinstance(result, Mapping): raise PlatformBoundary("BRIDGE_RECEIPT_REQUIRED")
+        state = result.get("state", "ACCEPTED")
+        if state not in ("ACCEPTED", "UI_VISIBLE", "GPT_ACKED"):
+            raise ValueError("INVALID_TRANSPORT_STATE")
+        if state in ("UI_VISIBLE", "GPT_ACKED") and not result.get("evidence"):
+            raise PlatformBoundary("VISIBILITY_EVIDENCE_REQUIRED")
+        if state == "GPT_ACKED" and not result.get("ack_id"):
+            raise PlatformBoundary("GPT_ACK_ID_REQUIRED")
+        return TransportReceipt(state, self.provider, tuple(result.get("evidence", ())), result.get("ack_id"), result.get("detail"))
 
 class ReturnToOrigin:
     def __init__(self, db_path: str | Path):
@@ -64,11 +102,14 @@ class ReturnToOrigin:
     def deliver(self, callback_event_id, adapter):
         with self._conn() as c: row=c.execute("SELECT * FROM callbacks WHERE callback_event_id=?",(callback_event_id,)).fetchone()
         if not row: raise KeyError(callback_event_id)
-        if row[4] in ("ACKED","DELIVERED","ACCEPTED"): return row[4]
+        if row[4] in ("GPT_ACKED", "UI_VISIBLE", "ACCEPTED", *LEGACY_DELIVERY): return row[4]
         e=json.loads(row[3]); attempts=row[5]+1
         try:
-            result=adapter.send(e); state=result.get("state","ACCEPTED")
-            with self._conn() as c: c.execute("UPDATE callbacks SET attempts=?,delivery_state=?,accepted_at=? WHERE callback_event_id=?",(attempts,state,time.time(),callback_event_id))
+            route = self.route(e["task_id"])
+            result=adapter.send(route, e) if isinstance(adapter, ApplicationThreadMessageAdapter) else adapter.send(e)
+            state = result.state if isinstance(result, TransportReceipt) else result.get("state", "ACCEPTED")
+            if state not in ("ACCEPTED", "UI_VISIBLE", "GPT_ACKED"): raise ValueError("INVALID_TRANSPORT_STATE")
+            with self._conn() as c: c.execute("UPDATE callbacks SET attempts=?,delivery_state=?,accepted_at=?,delivered_at=?,acked_at=?,ack_id=? WHERE callback_event_id=?",(attempts,state,time.time(),time.time() if state in ("UI_VISIBLE","GPT_ACKED") else None,time.time() if state == "GPT_ACKED" else None,getattr(result,"ack_id",None),callback_event_id))
             return state
         except Exception as exc:
             with self._conn() as c: c.execute("UPDATE callbacks SET attempts=?,delivery_state='OUTBOX',last_error=? WHERE callback_event_id=?",(attempts,str(exc),callback_event_id))
@@ -76,9 +117,9 @@ class ReturnToOrigin:
     def acknowledge(self, callback_event_id, ack_id):
         with self._conn() as c:
             row=c.execute("SELECT delivery_state FROM callbacks WHERE callback_event_id=?",(callback_event_id,)).fetchone()
-            if not row or row[0] not in ("ACCEPTED","DELIVERED"): raise ValueError("ACK_REJECTED")
-            c.execute("UPDATE callbacks SET delivery_state='ACKED',ack_id=?,acked_at=? WHERE callback_event_id=?",(ack_id,time.time(),callback_event_id))
-        return "ACKED"
+            if not row or row[0] not in ("ACCEPTED","UI_VISIBLE","DELIVERED"): raise ValueError("ACK_REJECTED")
+            c.execute("UPDATE callbacks SET delivery_state='GPT_ACKED',ack_id=?,acked_at=? WHERE callback_event_id=?",(ack_id,time.time(),callback_event_id))
+        return "GPT_ACKED"
 
 class ParentGPTTransport:
     """Platform adapter contract. Current product cannot confirm parent UI visibility."""
