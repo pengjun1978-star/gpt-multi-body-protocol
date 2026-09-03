@@ -2,10 +2,16 @@
   "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
   "phase": "P1A",
   "source_hardware": "MacBook Pro Codex",
-  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "status": "GPT_ACCEPTED",
   "lifecycle": ["REGISTERED", "READY", "RUNNING", "RESULT_READY", "WAITING_GPT_ACCEPTANCE", "ACCEPTED"],
   "persistence": "SQLite registry survives reopen and preserves stable task identity",
   "verification": {"tests": "46 passed", "diff_check": "PASS", "frozen_baseline": "UNCHANGED"},
   "commit": "64fa8745219c938e8e45dda435486b476a4b42b7",
-  "needs_gpt_decision": ["GPT ACK Closure / accept P1A"]
+  "callback_event_id": "4d95b1a4-89c7-461e-8977-514c5b5c9c36",
+  "gpt_ack": {
+    "status": "ACKED",
+    "verdict": "P1A_ACCEPTED",
+    "closure": "CLOSED"
+  },
+  "needs_gpt_decision": []
 }
