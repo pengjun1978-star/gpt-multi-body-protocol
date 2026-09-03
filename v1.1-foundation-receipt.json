@@ -1,0 +1,10 @@
+{
+  "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
+  "source_hardware": "MacBook Pro Codex",
+  "codex_thread_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "base": {"tag": "v1.0.2", "commit": "00abe88df21cbf37d03f2bb50335dfc6a1357748"},
+  "micro_tasks": {"T1": "PASS", "T2": "PASS", "T3": "PASS_CAPABILITY_ONLY", "T4": "PASS", "T5": "PASS_REJECT_RESERVED", "T6": "PASS"},
+  "verification": {"tests": "16 passed", "diff_check": "PASS", "frozen_baseline_modified": false},
+  "needs_gpt_decision": ["GPT ACK Closure / acceptance of Foundation"]
+}
