@@ -13,8 +13,17 @@
       "capabilities": [
         "orchestration",
         "lightweight_execution",
-        "file_operations"
-      ]
+        "file_operations",
+        "enterprise_mail"
+      ],
+      "enterprise_mail": {
+        "provider": "hop_zhilian_corporate_mail",
+        "runtime_health": "ONLINE",
+        "verified_operations": ["search", "read", "thread_tracking"],
+        "discovery": "existing hypcloud-email Skill provides Keychain credential entry and SMTP; read-only IMAP adapter validated for this task using imaplib with BODY.PEEK and local header decoding",
+        "network_verification": {"dns": "198.18.0.187", "tcp": "imap.exmail.qq.com:993 PASS", "tls": "PASS", "login": "PASS", "mailbox_select_readonly": "PASS"},
+        "blocker": null
+      }
     },
     {
       "node_id": "office-4090",

@@ -2,6 +2,6 @@
   "schema":"execution-receipt-v2","required":["task_id","event_id","source_hardware","status","changes","verification","artifacts","errors","needs_gpt_decision","delivery"],
   "status_enum":["partial","needs_confirmation","completed","failed","BLOCKED","ORPHANED"],
   "duplicate_policy":"same task_id and idempotency_key must not repeat side effects",
-  "delivery":{"transport":"PENDING|PASS|FAIL","inbox":"PENDING|PASS|FAIL","parent_chatgpt_conversation":"UNSUPPORTED|UNVERIFIED|PASS|FAIL","evidence":[]},
+  "delivery":{"transport":"PENDING|PASS|FAIL","inbox":"PENDING|PASS|FAIL","parent_chatgpt_conversation":"UNSUPPORTED|UNVERIFIED|PASS|FAIL","evidence":[],"contract":"business-evidence-delivery-v1","manifest":{"sha256":"string","bytes":"integer","chunks":"integer"},"chunks_sent":"integer","sender_confirmed":"boolean","parent_visibility":"UNVERIFIED|VERIFIED","callback_queue":"PENDING_CALLBACK|SENT_PENDING_ACK|FAILED_ESCALATED","ack":{"ack_id":"string","consumer":"GPT Brain"}},
   "properties":{"task_id":{"type":"string"},"event_id":{"type":"string"},"source_hardware":{"type":"string"},"status":{"type":"string"},"changes":{"type":"array"},"verification":{"type":"array"},"artifacts":{"type":"array"},"errors":{"type":"array"},"needs_gpt_decision":{"type":"array"},"delivery":{"type":"object"}}
 }

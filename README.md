@@ -1,6 +1,6 @@
 # GPT Multi-Body Protocol v1.0.2 — Business Routing Foundation
 
-This isolated development line extends the frozen v1.0/v1.0.1 protocol with a capability registry, backward-compatible task requirements, deterministic routing, and sanitized business receipts.
+This release extends the frozen v1.0/v1.0.1 protocol with a capability registry, backward-compatible task requirements, deterministic routing, sanitized business receipts, resumable execution, evidence delivery, and automatic GPT callback acknowledgement tracking.
 
 ## Safety boundary
 
@@ -11,6 +11,13 @@ Registry discovery reads local identity, Office-4090 GPU/runtime metadata, and t
 - `discover.py`: builds a live registry for `mbp-primary`, `office-4090`, and reserved `mac-studio`.
 - `router.py`: rejects `RESERVED`, `OFFLINE`, `STALE`, and `ORPHANED`, then matches requirements deterministically.
 - `business_receipt.py`: runs Office capability discovery through the router and writes a Business Receipt.
+- `resume_contract.py`: resolves and resumes an existing mapping; it rejects silent create and duplicate active mappings.
+- `business_evidence_delivery.py`: packages substantive evidence into hashed, bounded chunks and tracks delivery separately from parent visibility.
+- `automatic_callback.py`: persists callbacks, retries busy parents, deduplicates sends, escalates failures, and records explicit GPT ACKs.
 - `schemas/task-requirement-v1.json`: compatible requirement fields.
 
 The employee-review integration is represented only by a future task template boundary; this line does not access mailbox credentials or fabricate email data.
+
+## Resume Contract (P0)
+
+Every task mapping carries `parent_gpt_thread_id`, `codex_task_id`, `codex_thread_session_id`, `body_node_id`, `project_worktree`, `created_at`, and `last_resume_at`. A continuation first resolves the existing `(parent_gpt_thread_id, codex_task_id)` record, verifies body identity, then resumes it. Missing or mismatched records return `RESUME_FAILED/BLOCKED`; they never create a replacement. Creation requires explicit new-task intent and returns `CREATED_NEW`. Existing `ACTIVE` or `RESUMABLE` mappings reject creation.

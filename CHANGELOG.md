@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.2 - 2026-09-03
+
+- Added resumable canonical-session guard with stable execution identifiers.
+- Added Business Evidence Delivery Contract with bounded chunks, manifest, and SHA-256 integrity.
+- Added persistent Automatic Callback queue with busy retry, idempotency, ACK tracking, and failure escalation.
+- Added Release Candidate regression coverage for Router, Resume, evidence delivery, callbacks, ACK, and failure paths.
+- Preserved v1.0/v1.0.1 frozen baselines.
+
 ## v1.0.2-dev - 2026-09-03
 
 - Added live Capability Registry v1 and deterministic Router v0.

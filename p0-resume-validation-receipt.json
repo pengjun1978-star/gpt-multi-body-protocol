@@ -1,0 +1,19 @@
+{
+  "schema_version": "v1.0.2",
+  "task_id": "mbp-p0-resume-contract-20260903-001",
+  "source_hardware": "MacBook Pro Codex",
+  "body_node_id": "mbp-primary",
+  "parent_gpt_thread_id": "6a96e7a6-4d34-83e8-810c-e7195f3dc427",
+  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "outcome": "RESUMED_EXISTING",
+  "verification": {
+    "body_self_identification": "PASS",
+    "tests": "7 passed",
+    "same_task_two_resumes_same_identifiers": "PASS",
+    "explicit_create_new_new_identifier": "PASS",
+    "missing_mapping_blocks_without_create": "PASS",
+    "frozen_baselines_modified": false
+  },
+  "artifacts": ["resume_contract.py", "test_resume_contract.py", "repeated-business-case-001-tasks.md"],
+  "needs_gpt_decision": ["指定 Case 001 canonical execution thread 后再归档重复 idle tasks", "GPT acceptance of v1.0.2 P0 fix"]
+}
