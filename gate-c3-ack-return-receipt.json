@@ -1,0 +1,23 @@
+{
+  "task_id": "20260903-v111-gate-c3-ack-return",
+  "source_hardware": "MacBook Pro Codex",
+  "commit": "2249c7b19402408f79857adac687f60696bf4676",
+  "c1_return_to_origin_routing": "PASS",
+  "c2_parent_gpt_received_consumed": "PASS",
+  "c3_machine_readable_ack_return": "PLATFORM_BOUNDARY",
+  "gate_c_overall": "PROTOCOL_PASS_PLATFORM_BOUNDARY",
+  "local_e2e": {
+    "callback_event_id": "cb-1",
+    "task_id": "t1",
+    "execution_generation": 3,
+    "parent_route": {"kind": "parent_gpt", "id": "p1"},
+    "ack_event_id": "ack-verified-by-deterministic-channel",
+    "registry_ack_status": "GPT_ACKED",
+    "duplicate_ack": "idempotent",
+    "identity_mismatch": "rejected",
+    "outbox_retry": "covered",
+    "successor_generation": "covered"
+  },
+  "platform_e2e": "BLOCKED: no supported Parent GPT to local Codex machine-readable transport",
+  "minimum_adapter_contract": "receive ACK bound to callback_event_id, task_id, execution_generation, parent_route; durable retry; readable receipt"
+}
