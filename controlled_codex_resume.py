@@ -49,6 +49,7 @@ class ControlledCodexResume:
         codex_home: str | Path | None = None,
         require_local_session: bool = True,
         timeout_seconds: int = 1800,
+        rollout_path: str | Path | None = None,
     ) -> dict:
         claim = self.registry.claim(
             identity.parent_gpt_thread_id,
@@ -70,6 +71,7 @@ class ControlledCodexResume:
                 codex_home=codex_home,
                 require_local_session=require_local_session,
                 timeout_seconds=timeout_seconds,
+                rollout_path=rollout_path,
             )
             return {"claim": claim, "resume": result}
         finally:

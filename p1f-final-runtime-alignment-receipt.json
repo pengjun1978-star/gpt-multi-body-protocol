@@ -1,0 +1,14 @@
+{
+  "task_id":"v11-mto-foundation-mbp-primary-20260903-001",
+  "canonical_session_id":"01a06559-be63-7353-88a2-6ee8d885c83f",
+  "phase":"P1F_FINAL_RUNTIME_ALIGNMENT",
+  "status":"BLOCKED_BY_CODEX_RUNTIME/MIGRATION_RISK",
+  "controller_repair":"runtime discovery prefers ChatGPT bundled 0.152.1 and fails closed for older writer mismatch; append-only snapshot validator and exact returned-ID guard added",
+  "runtime":{"path":"/Applications/ChatGPT.app/Contents/Resources/codex","version":"0.152.1","writer_version":"0.152.1"},
+  "gate":{"outcome":"RESUMED_EXISTING","generation":1,"before_subprocess":true},
+  "resume":{"command":"codex exec --json resume 01a06559-be63-7353-88a2-6ee8d885c83f","mode":"bounded_exact_session","result":"FAILED_DESERIALIZATION"},
+  "error":{"record_id":"fco_01a0655c-1b43-71f0-8c1e-e396b8ae7e02","message":"failed to deserialize stored thread item ...: unknown variant `functionCallOutput`","expected":"userMessage, hookPrompt, agentMessage, plan, reasoning, commandExecution, fileChange, mcpToolCall, dynamicToolCall, collabAgentToolCall, subAgentActivity, webSearch, imageView, sleep, imageGeneration, enteredReviewMode, exitedReviewMode, contextCompaction"},
+  "rollout":{"path":"/Users/pengjun1978/.codex/sessions/2026/09/03/rollout-2026-09-03T11-39-35-01a06559-be63-7353-88a2-6ee8d885c83f.jsonl","sha256_after":"058820459a566b612c8a3d18698d7e56bb5195aa126a2bfa71653ee1d1506a25","bytes_after":315594,"append_only_policy":"not validated for failed resume; no truncate/replace operation performed"},
+  "verification":{"tests":"53 passed","diff_check":"PASS","new_session":"not observed","identity_drift":"not observed","migration_apply":false},
+  "next_stage":"Require GPT decision on runtime reader compatibility or controlled migration review; do not alter canonical rollout."
+}

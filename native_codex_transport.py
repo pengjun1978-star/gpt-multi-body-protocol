@@ -13,6 +13,7 @@ import json
 import os
 import subprocess
 import uuid
+import hashlib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -28,6 +29,30 @@ class CodexResumeResult:
     returncode: int
     stdout: str
     stderr: str
+    before: dict | None = None
+    after: dict | None = None
+
+def discover_runtime(codex_home=None, rollout_path=None) -> tuple[str, str]:
+    candidates = [Path('/Applications/ChatGPT.app/Contents/Resources/codex'), Path('/opt/homebrew/bin/codex')]
+    writer = None
+    if rollout_path and Path(rollout_path).exists():
+        with Path(rollout_path).open() as f: writer = json.loads(f.readline()).get('payload',{}).get('cli_version')
+    for path in candidates:
+        if not path.exists(): continue
+        version = subprocess.run([str(path), '--version'], capture_output=True, text=True, check=False).stdout.strip().split()[-1]
+        if writer and tuple(map(int, version.split('.'))) < tuple(map(int, writer.split('.'))): continue
+        return str(path), version
+    raise NativeCodexTransportError('CODEX_RUNTIME_TOO_OLD')
+
+def rollout_snapshot(path):
+    p=Path(path); data=p.read_bytes(); lines=data.splitlines(keepends=True)
+    return {'path':str(p),'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'record_count':len(lines),'prefix':data}
+
+def validate_append_only(before, after, session_id):
+    if before['path'] != after['path'] or after['bytes'] < before['bytes'] or not after['prefix'].startswith(before['prefix']):
+        raise NativeCodexTransportError('CODEX_ROLLOUT_APPEND_ONLY_VIOLATION')
+    if session_id not in after['prefix'].decode('utf-8','ignore'):
+        raise NativeCodexTransportError('CODEX_SESSION_IDENTITY_DRIFT')
 
 
 def _validate_session_id(session_id: str) -> str:
@@ -73,17 +98,21 @@ def resume_exact_session(
     prompt: str,
     *,
     cwd: str | Path | None = None,
-    codex_bin: str = "codex",
+    codex_bin: str | None = None,
     codex_home: str | Path | None = None,
     require_local_session: bool = True,
     timeout_seconds: int = 1800,
     extra_exec_args: Iterable[str] = (),
+    rollout_path: str | Path | None = None,
 ) -> CodexResumeResult:
     """Resume exactly one persisted Codex session and reject identity drift."""
     sid = _validate_session_id(session_id)
     if require_local_session and not _session_exists(sid, codex_home):
         raise NativeCodexTransportError("CODEX_SESSION_NOT_FOUND_LOCAL")
 
+    if codex_bin is None:
+        codex_bin, _ = discover_runtime(codex_home, rollout_path)
+    before = rollout_snapshot(rollout_path) if rollout_path else None
     command = [
         codex_bin,
         "exec",
@@ -117,9 +146,13 @@ def resume_exact_session(
             f"CODEX_SESSION_IDENTITY_DRIFT: expected={sid} observed={sorted(observed)}"
         )
 
+    after = rollout_snapshot(rollout_path) if rollout_path else None
+    if before and after: validate_append_only(before, after, sid)
     return CodexResumeResult(
         session_id=sid,
         returncode=proc.returncode,
         stdout=proc.stdout,
         stderr=proc.stderr,
+        before={k:v for k,v in before.items() if k!='prefix'} if before else None,
+        after={k:v for k,v in after.items() if k!='prefix'} if after else None,
     )
