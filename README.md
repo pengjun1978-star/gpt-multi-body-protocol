@@ -1,4 +1,26 @@
-# GPT Multi-Body Protocol v1.0.2 — Business Routing Foundation
+# GPT Multi-Body Protocol v1.1.1 — Reliability & Integration
+
+This release candidate hardens runtime affinity, cloud artifact transport,
+exact continuation, Return-to-Origin callbacks, parent progress reporting,
+runtime liveness, and explicit resource contracts. GPT Work is the Cloud
+Artifact Production Runtime; it is not a Body.
+
+## Release boundaries
+
+- `DIRECT_CLOUD_WORK` requires strong Cloud Runtime affinity.
+- `LOCAL_BRIDGED_CLOUD_WORK` is an explicit fallback and cannot satisfy Direct
+  Cloud Work acceptance.
+- Runtime fallback is never silent; unavailable Cloud Runtime returns an
+  explicit failure.
+- The 200KB Human-in-the-Loop Cloud-to-Local artifact path is
+  `PASS/GPT_ACCEPTED`. Fully Automatic Cloud-to-Local remains a platform
+  boundary.
+- Enterprise Mail Skill employee rollout is `MANUAL/OFFLINE ROLLOUT` and does
+  not block this release.
+- This package must be accepted by Parent GPT before GA publication.
+
+See [v1.1.1 acceptance matrix](docs/v1.1.1-acceptance-matrix.md) and
+[200KB E2E evidence](docs/GPT-Work-Cloud-200KB-E2E.md).
 
 This release extends the frozen v1.0/v1.0.1 protocol with a capability registry, backward-compatible task requirements, deterministic routing, sanitized business receipts, resumable execution, evidence delivery, and automatic GPT callback acknowledgement tracking.
 

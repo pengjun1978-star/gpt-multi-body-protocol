@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.1.1 - 2026-09-03
+
+- Added Runtime Dispatch Guard with strong Cloud Runtime affinity and explicit
+  Direct-versus-bridged cloud work types.
+- Added Gate D liveness states and heartbeat timeout handling to `STALLED`.
+- Added explicit execution, compute, data, artifact, callback, and recovery
+  resource contract validation.
+- Formalized 200KB GPT Work artifact evidence and Human-in-the-Loop transport
+  boundary.
+- Moved Enterprise Mail Skill employee clean-install and production rollout to
+  manual/offline rollout scope.
+- Release verification: 67/67 automated tests pass; v1.1 frozen baseline is
+  preserved at `269d7d47892427454255c051b5582c02f812331a`.
+
 ## v1.0.2 - 2026-09-03
 
 - Added resumable canonical-session guard with stable execution identifiers.
