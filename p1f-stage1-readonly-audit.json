@@ -1,0 +1,26 @@
+{
+  "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
+  "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+  "phase": "P1F_STAGE_1_READONLY_COMPATIBILITY_AUDIT",
+  "conclusion": "BLOCKED_BY_CODEX_RUNTIME/MIGRATION_RISK",
+  "canonical_rollout": {
+    "path": "/Users/pengjun1978/.codex/sessions/2026/09/03/rollout-2026-09-03T11-39-35-01a06559-be63-7353-88a2-6ee8d885c83f.jsonl",
+    "session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+    "bytes": 294024,
+    "sha256": "4b1ba6df0aa6c21b83cb41b4ada53abe2500b847684be5aef426b5a3ea3f27df",
+    "mtime": "2026-09-03T11:50:18+0800",
+    "record_count": 125,
+    "max_record_bytes": 38047,
+    "over_16MiB_count": 0,
+    "json_parse_errors": 0,
+    "session_meta": {"cli_version":"0.152.1","source":"vscode","originator":"codex_work_desktop","thread_source":"chatgpt_handoff","cwd":"/Users/pengjun1978/Documents/Codex/2026-09-03/referenced-chatgpt-conversation-this-is-an-9"},
+    "index_name": "Implement v1.1 orchestrator"
+  },
+  "response_items": {"function_call_output_count": 3,"functionCallOutput_event_count": 3,"ordinals":[54,55,74,75,93,94],"types":["response_item.payload.type=function_call_output","event_msg.payload.item.type=FunctionCallOutput"],"names":["send_message_to_thread"],"max_output_bytes":1476},
+  "schema_assessment": "Records are valid JSON and use current response_item envelope with snake_case function_call_output, mirrored by event_msg PascalCase FunctionCallOutput. Evidence does not support deleting the records. The concrete risk is historical reader/runtime compatibility across CLI versions and envelope/type conversion, with payload/envelope mapping requiring Stage-2 review.",
+  "current_cli": {"version":"0.146.0","migrate_rollouts_dry_run":"UNAVAILABLE","command_result":"error: unexpected argument '--dry-run' found; Usage: codex [OPTIONS] [PROMPT]"},
+  "apply_executed": false,
+  "canonical_rollout_modified": false,
+  "migration_risk_features": ["cli_version_mismatch_0.146.0_vs_rollout_0.152.1","chatgpt_handoff_source","historical functionCallOutput/function_call_output envelope pair","subagent_or_compatibility_inputs_not_proven_by_readonly_records"],
+  "next_stage": "Requires separate GPT ACK/authorization before any migration review; dry-run eligibility cannot establish safety because it does not fully scan >16 MiB records."
+}
