@@ -1,0 +1,17 @@
+{
+  "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
+  "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+  "phase": "P1D",
+  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "pipeline": ["Task Requirement", "Body Affinity Selector", "Agent Scheduler", "Codex", "Compute Router"],
+  "policy": "AFFINITY_BEFORE_LOAD",
+  "real_cases": {
+    "office_codex": {"body": "office-4090", "transport": "SSH", "host": "CHINAMI-UB37H72", "result": "PASS"},
+    "office_compute": {"body": "office-4090", "transport": "11434", "http": 200, "model": "qwen3.8-27b-dflash2", "result": "PASS"},
+    "mac_compute_route": {"from": "mbp-primary", "to": "office-4090", "port": 11434, "result": "PASS"}
+  },
+  "rejections": {"mac-studio": "RESERVED", "mbp-for-office-task": ["responsibility", "data_owner", "os", "hardware", "environment", "permissions"]},
+  "load_model": {"agent_load_independent": true, "compute_load_independent": true, "office_agent_load": 2, "office_compute_load": 1},
+  "verification": {"p1d_tests": "2 passed", "frozen_baselines": "UNCHANGED", "11435_required": false},
+  "needs_gpt_decision": ["GPT ACK Closure / accept P1D"]
+}
