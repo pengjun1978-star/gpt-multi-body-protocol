@@ -1,0 +1,16 @@
+{
+  "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
+  "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+  "phase": "RC_INTEGRATED_E2E",
+  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "historical_receipts": "P1A-P1E CLOSED and unmodified",
+  "real_environment": ["mbp-primary", "office-4090"],
+  "mac_studio": "RESERVED_NO_DISPATCH_COMPUTE_FAILOVER_OR_PASS",
+  "real_dag": {"mac": {"body":"mbp-primary","start":1788411634.213266,"end":1788411636.216208},"office":{"body":"office-4090","start":1788411634.214597,"end":1788411639.318812},"overlap":true,"join":"ACCEPTED"},
+  "real_office": {"codex_transport":"SSH PASS host=CHINAMI-UB37H72 user=sundc","compute_transport":"11434 HTTP 200 model=qwen3.8-27b-dflash2"},
+  "routing_cases": {"mac_affinity":"mbp-primary","office_affinity":"office-4090","shared_mac_busy":"office-4090","mac_affinity_busy":"WAITING_RETRY","mac_remote_compute":"office-4090:11434","office_local_compute":"office-4090 local 4090"},
+  "fault_isolation_cases": "validated by deterministic capability-scoped tests; real transport paths separately evidenced",
+  "duplicate_gate": "PASS_REGRESSION",
+  "verification": {"full_regression":"52 passed","diff_check":"PASS","frozen_baselines":"UNCHANGED","11435_required":false},
+  "needs_gpt_decision": ["GPT ACK Closure / accept RC"]
+}
