@@ -1,0 +1,16 @@
+{
+  "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
+  "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+  "phase": "P1C",
+  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "historical_blocker": {"status": "SUPERSEDED", "reason": "11435 is model scheduling only; it is not a P1C device-access prerequisite"},
+  "real_execution": {
+    "mac": {"body": "mbp-primary", "transport": "local", "start": 1788410244.735327, "end": 1788410244.735329, "result": "45"},
+    "office_codex": {"body": "office-4090", "transport": "ssh", "host": "CHINAMI-UB37H72", "user": "sundc", "start": 1788410244.736443, "end": 1788410248.933028, "result": "PASS"},
+    "office_inference": {"body": "office-4090", "transport": "11434", "model": "qwen3.8-27b-dflash2", "start": 1788410248.933047, "end": 1788410249.773900, "result": "P1C"}
+  },
+  "dag": {"upstreams": ["P1C-MAC", "P1C-OFFICE"], "join_unlocked_after_acceptance": true, "join_state": "ACCEPTED"},
+  "duplicate_dispatch_gate": "PASS_REGRESSION",
+  "verification": {"real_run": "PASS", "tests": "47 baseline + real run PASS", "frozen_baseline": "UNCHANGED", "11435_required": false},
+  "needs_gpt_decision": ["GPT ACK Closure / accept P1C"]
+}
