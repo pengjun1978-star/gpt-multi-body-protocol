@@ -2,7 +2,7 @@
   "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
   "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
   "phase": "P1C",
-  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "status": "GPT_ACCEPTED",
   "historical_blocker": {"status": "SUPERSEDED", "reason": "11435 is model scheduling only; it is not a P1C device-access prerequisite"},
   "real_execution": {
     "mac": {"body": "mbp-primary", "transport": "local", "start": 1788410551.363667, "end": 1788410553.368756, "result": "45"},
@@ -12,5 +12,8 @@
   "dag": {"upstreams": ["P1C-MAC", "P1C-OFFICE"], "join_unlocked_after_acceptance": true, "join_state": "ACCEPTED"},
   "duplicate_dispatch_gate": "PASS_REGRESSION",
   "verification": {"real_run": "PASS", "parallel_overlap": "PASS", "tests": "47 baseline + 11 Gate + real run PASS", "frozen_baseline": "UNCHANGED", "11435_required": false},
-  "needs_gpt_decision": ["GPT ACK Closure / accept P1C"]
+  "implementation_commit": "9d7f47b78f433e487d3c44f3ce44380082f51ac6",
+  "callback_event_id": "29231b11-59af-42d0-b193-8d34fcf80d34",
+  "gpt_ack": {"status": "ACKED", "verdict": "P1C_ACCEPTED", "closure": "CLOSED"},
+  "needs_gpt_decision": []
 }
