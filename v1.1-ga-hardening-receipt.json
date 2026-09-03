@@ -1,0 +1,12 @@
+{
+  "task_id":"v11-mto-foundation-mbp-primary-20260903-001",
+  "generation":2,
+  "canonical_session":"01a06602-57ad-7ef0-a4f2-972172464b70",
+  "status":"PASS_PENDING_GPT_ACCEPTANCE",
+  "exact_resume":{"runtime":"/Applications/ChatGPT.app/Contents/Resources/codex","version":"0.152.1","gate":"RESUMED_EXISTING","returned_session":"01a06602-57ad-7ef0-a4f2-972172464b70","new_session_created":false,"rollout_append_only":true,"before":{"bytes":95070,"records":32,"sha256":"fca1cda071bc0f4ba211320eccfccaaf6288de6db303d454b6d09ca109847fd2"},"after":{"bytes":118461,"records":43,"sha256":"75d39835eaaedb4f78987e5069a80801a7548a3d11eb60293bb3cd31f6a008dd"}},
+  "validation":{"full_regression":"55 passed","integrated_smoke":"PASS","affinity_before_load":"PASS","node_agent_compute_separation":"PASS","persistent_registry_dag":"PASS","single_owner":"PASS","callback_ack":"PASS_HISTORY","successor_boundary":"PASS","frozen_tags":{"v1.0":"817c16ade989399ffd0da876f3712f6e76b63bc1","v1.0.1":"6ba9af7781527969036c445609eb998e9b67e3c3","v1.0.2":"00abe88df21cbf37d03f2bb50335dfc6a1357748"}},
+  "cleanup_inventory":{"DO-NOT-CREATE":"duplicate of aa39048; retained","STOP":"duplicate of aa39048; retained","v1.1-multi-task-orchestrator-p0-work":"duplicate of aa39048; retained","p0-incident-replay":"contains distinct P0 receipt; retained","noop":"contains distinct gate commits; retained","issues_2_3_4":"closed duplicate evidence; retained","issue_1":"canonical OPEN tracker"},
+  "release_notes":"docs/v1.1-architecture-and-release-notes.md",
+  "desktop_interoperability_limitation":"CLI resume and Desktop UI/index refresh may diverge; documented, does not alter Controller identity guarantees.",
+  "needs_gpt_decision":["GPT ACK Closure / GA acceptance"]
+}
