@@ -1,0 +1,14 @@
+{
+  "business_task_id":"v11-mto-foundation-mbp-primary-20260903-001",
+  "generation":2,
+  "canonical_session":"01a06602-57ad-7ef0-a4f2-972172464b70",
+  "status":"RELEASED / GPT_ACCEPTED / FROZEN",
+  "release_anchor":"269d7d47892427454255c051b5582c02f812331a",
+  "tag":{"name":"v1.1","object":"f538bd9524b92889db19a8c1ea70fb0089f9bf81","peeled_commit":"269d7d47892427454255c051b5582c02f812331a","annotated":true},
+  "release":{"name":"GPT Multi-Body Protocol v1.1","tag":"v1.1","status":"published","draft":false,"prerelease":false,"url":"https://github.com/pengjun1978-star/gpt-multi-body-protocol/releases/tag/v1.1","published_at":"2026-09-03T06:50:23Z"},
+  "contents":["Multi-Task Orchestrator","Affinity Before Load","Node != Agent != Compute","persistent Registry/DAG","Single-Owner","MacBook + Office-4090 real multi-body validation","independent Agent/Compute load","successor-generation compatibility boundary","Automatic Callback + GPT ACK"],
+  "known_limitations":["Mac Studio RESERVED/FUTURE","heavy inference outside v1.1 validation","Desktop UI/index and CLI resume interoperability divergence possible","legacy generation=1 LEGACY_COMPATIBILITY_BLOCKED"],
+  "frozen_baselines":{"v1.0":"817c16ade989399ffd0da876f3712f6e76b63bc1","v1.0.1":"6ba9af7781527969036c445609eb998e9b67e3c3","v1.0.2":"00abe88df21cbf37d03f2bb50335dfc6a1357748"},
+  "verification":{"worktree":"clean","remote_tag_peeled_commit":"PASS","release_re_read":"PASS","future_changes":"v1.2_only"},
+  "callback_event":"pending"
+}
