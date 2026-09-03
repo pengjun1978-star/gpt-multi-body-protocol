@@ -26,9 +26,10 @@ class ControlledResumeIdentity:
 
 
 class ControlledCodexResume:
-    def __init__(self, db_path: str | Path, *, lease_seconds: float = 1800.0):
+    def __init__(self, db_path: str | Path, *, lease_seconds: float = 1800.0, blocked_legacy_sessions: set[str] | None = None):
         self.registry = SQLiteExecutionOwnerRegistry(db_path, lease_seconds=lease_seconds)
         self.trigger_gate = TriggerGate({TRANSPORT})
+        self.blocked_legacy_sessions = blocked_legacy_sessions or set()
 
     def register(self, identity: ControlledResumeIdentity) -> dict:
         return self.registry.register_canonical(
@@ -51,6 +52,8 @@ class ControlledCodexResume:
         timeout_seconds: int = 1800,
         rollout_path: str | Path | None = None,
     ) -> dict:
+        if identity.canonical_session_id in self.blocked_legacy_sessions:
+            raise RuntimeError("LEGACY_COMPATIBILITY_BLOCKED")
         claim = self.registry.claim(
             identity.parent_gpt_thread_id,
             identity.task_id,

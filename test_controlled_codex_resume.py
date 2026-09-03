@@ -48,6 +48,14 @@ class ControlledCodexResumeTests(unittest.TestCase):
         snap = self.bridge.registry.snapshot(PARENT, TASK)
         self.assertEqual("IDLE", snap["state"])
 
+    @patch("controlled_codex_resume.resume_exact_session")
+    def test_legacy_session_blocked_before_subprocess(self, resume):
+        bridge = ControlledCodexResume(Path(self.tmp.name) / "legacy.db", blocked_legacy_sessions={CANON})
+        bridge.register(self.canon)
+        with self.assertRaisesRegex(RuntimeError, "LEGACY_COMPATIBILITY_BLOCKED"):
+            bridge.resume(self.canon, "do not run", require_local_session=False)
+        resume.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()
