@@ -1,0 +1,20 @@
+name: v1.1 P0 control-plane tests
+
+on:
+  push:
+    branches:
+      - v1.1-multi-task-orchestrator
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run protocol unit tests
+        run: python -m unittest discover -v
