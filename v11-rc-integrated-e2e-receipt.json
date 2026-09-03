@@ -2,7 +2,7 @@
   "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
   "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
   "phase": "RC_INTEGRATED_E2E",
-  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "status": "GPT_ACCEPTED",
   "historical_receipts": "P1A-P1E CLOSED and unmodified",
   "real_environment": ["mbp-primary", "office-4090"],
   "mac_studio": "RESERVED_NO_DISPATCH_COMPUTE_FAILOVER_OR_PASS",
@@ -12,5 +12,8 @@
   "fault_isolation_cases": "validated by deterministic capability-scoped tests; real transport paths separately evidenced",
   "duplicate_gate": "PASS_REGRESSION",
   "verification": {"full_regression":"52 passed","diff_check":"PASS","frozen_baselines":"UNCHANGED","11435_required":false},
-  "needs_gpt_decision": ["GPT ACK Closure / accept RC"]
+  "implementation_commit": "2b24f7eb1573fe2856e819c7008f872b09dc5f32",
+  "callback_event_id": "46ef8611-9482-4fd9-9a80-895febb0c1cb",
+  "gpt_ack": {"status":"ACKED","verdict":"V11_RC_INTEGRATED_E2E_ACCEPTED","closure":"CLOSED"},
+  "needs_gpt_decision": []
 }
