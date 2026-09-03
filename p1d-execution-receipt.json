@@ -2,7 +2,7 @@
   "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
   "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
   "phase": "P1D",
-  "status": "PASS_PENDING_GPT_ACCEPTANCE",
+  "status": "GPT_ACCEPTED",
   "pipeline": ["Task Requirement", "Body Affinity Selector", "Agent Scheduler", "Codex", "Compute Router"],
   "policy": "AFFINITY_BEFORE_LOAD",
   "real_cases": {
@@ -12,6 +12,9 @@
   },
   "rejections": {"mac-studio": "RESERVED", "mbp-for-office-task": ["responsibility", "data_owner", "os", "hardware", "environment", "permissions"]},
   "load_model": {"agent_load_independent": true, "compute_load_independent": true, "office_agent_load": 2, "office_compute_load": 1},
-  "verification": {"p1d_tests": "2 passed", "frozen_baselines": "UNCHANGED", "11435_required": false},
-  "needs_gpt_decision": ["GPT ACK Closure / accept P1D"]
+  "verification": {"p1d_tests": "2 passed", "full_tests": "49 passed", "frozen_baselines": "UNCHANGED", "11435_required": false},
+  "implementation_commit": "b9de7ade80f3c0a05ae1c5105ffd696479a2876f",
+  "callback_event_id": "3be18234-0b1a-486e-8643-7575de4fdf31",
+  "gpt_ack": {"status": "ACKED", "verdict": "P1D_ACCEPTED", "closure": "CLOSED"},
+  "needs_gpt_decision": []
 }
