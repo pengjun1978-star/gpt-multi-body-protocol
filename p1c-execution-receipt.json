@@ -1,0 +1,13 @@
+{
+  "task_id": "v11-mto-foundation-mbp-primary-20260903-001",
+  "canonical_session_id": "01a06559-be63-7353-88a2-6ee8d885c83f",
+  "phase": "P1C",
+  "source_hardware": "MacBook Pro Codex",
+  "status": "BLOCKED",
+  "reason": "REAL_CROSS_BODY_TRANSPORT_UNAVAILABLE",
+  "route": "LAN",
+  "office_4090": {"inference_http": 200, "model": "qwen3.8-27b-dflash2", "control_http": 0, "control_rc": 28, "control_diagnosis": "unreachable"},
+  "simulated_pass_forbidden": true,
+  "frozen_baseline": "UNCHANGED",
+  "needs_gpt_decision": ["Restore/verify Office-4090 authenticated control transport, then resume P1C"]
+}
