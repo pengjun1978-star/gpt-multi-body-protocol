@@ -40,6 +40,13 @@ def task_requirement() -> dict[str, Any]:
         "fallback_allowed": False,
     }
 
+def mail_dispatch_contract(business_task_id: str, artifact_id: str, recipients: dict[str, list[str]]) -> dict[str, Any]:
+    """Return the immutable references a sender must carry into Attachment Gate."""
+    if not business_task_id or not artifact_id:
+        raise ValueError("BUSINESS_TASK_AND_ARTIFACT_REQUIRED")
+    return {"business_task_id": business_task_id, "artifact_id": artifact_id,
+            "recipients": {"to": list(recipients.get("to", [])), "cc": list(recipients.get("cc", []))}}
+
 
 def normalize_message(raw: dict[str, Any], evidence_id: str) -> dict[str, Any]:
     """Normalize provider output while preserving employee-vs-fact provenance."""
